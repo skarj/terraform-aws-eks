@@ -65,7 +65,10 @@ NOTE: This full configuration utilizes the [Terraform http provider](https://www
 
 
 ## Documentation
+  * [Terraform example for EKS](https://github.com/terraform-providers/terraform-provider-aws/tree/master/examples/eks-getting-started)
   * [Getting Started with AWS EKS](https://www.terraform.io/docs/providers/aws/guides/eks-getting-started.html)
   * [Getting Started with Amazon EKS](https://www.terraform.io/docs/providers/http/index.html)
   * [Configure kubectl for Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/configure-kubectl.html)
+  * [AWS IAM Authenticator for Kubernetes](https://github.com/kubernetes-sigs/aws-iam-authenticator)
   * [Golang installation](https://github.com/golang/go/wiki/Ubuntu)
+  * [Terraform HTTP Provider](https://www.terraform.io/docs/providers/http/index.html)
