@@ -1,6 +1,6 @@
 # Terraform EKS Cluster
 
-This configuration includes the  following resources:
+This configuration includes the following resources:
 
   * EKS Cluster: AWS managed Kubernetes cluster of master servers
   * AutoScaling Group containing 2 m4.large instances (by default) based on the latest EKS Amazon Linux 2 AMI: Operator managed Kubernetes
@@ -16,6 +16,7 @@ NOTE: This full configuration utilizes the [Terraform http provider](https://www
   * AWS account
   * Terraform installed and configured to use AWS credentials
   * set of IAM credentials with suitable access to create AutoScaling, EC2, EKS, and IAM resources
+  * [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator) installed and available in PATH
   * kubectl must be at least version 1.10 to support exec authentication with usage of aws-iam-authenticator
 
 
