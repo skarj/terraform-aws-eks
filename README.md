@@ -12,14 +12,14 @@ This configuration includes the  following resources:
 NOTE: This full configuration utilizes the [Terraform http provider](https://www.terraform.io/docs/providers/http/index.html) to call out to icanhazip.com to determine your local workstation external IP for easily configuring EC2 Security Group access to the Kubernetes master servers. Feel free to replace this as necessary.
 
 
-### Requirements
+## Requirements
   * AWS account
   * Terraform installed and configured to use AWS credentials
   * set of IAM credentials with suitable access to create AutoScaling, EC2, EKS, and IAM resources
   * kubectl must be at least version 1.10 to support exec authentication with usage of aws-iam-authenticator
 
 
-### Usage
+## Usage
   * check default variables in variables.tf: node instance type, required count of nodes, etc
   * apply terraform configuration
 
@@ -28,13 +28,21 @@ NOTE: This full configuration utilizes the [Terraform http provider](https://www
 
   * configure kubectl. Get kubeconfig config from terraform output
 
-        terraform output
+        terraform output kubeconfig > ~/.kube/config-devel
 
-  * save this configuration to the default kubectl folder, with cluster name in the file name. For example ~/.kube/config-devel
   * check kubectl
 
         export KUBECONFIG=$KUBECONFIG:~/.kube/config-devel
         kubectl get svc
+
+  * join worker nodes. Get IAM role authentication configmap from terraform output
+
+        terraform output config_map_aws_auth > config-map-aws-auth.yaml
+
+  * apply aconfigmap and check worker nodes
+
+        kubectl apply -f config-map-aws-auth.yaml
+        kubectl get nodes --watch
 
 
 ## Variables
@@ -50,6 +58,13 @@ NOTE: This full configuration utilizes the [Terraform http provider](https://www
   * kubeconfig -  configuration map for kubectl to connect to a new cluster
 
 
-### Documentation
+## Uninstall
+
+  * terraform destroy
+
+
+## Documentation
   * [Getting Started with AWS EKS](https://www.terraform.io/docs/providers/aws/guides/eks-getting-started.html)
   * [Getting Started with Amazon EKS](https://www.terraform.io/docs/providers/http/index.html)
+  * [Configure kubectl for Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/configure-kubectl.html)
+  * [Golang installation](https://github.com/golang/go/wiki/Ubuntu)
