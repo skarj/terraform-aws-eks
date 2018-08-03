@@ -3,8 +3,7 @@
 #
 
 provider "aws" {
-  region  = "us-west-2"
-  profile = "default"
+  region = "us-west-2"
 }
 
 # Using these data sources allows the configuration to be

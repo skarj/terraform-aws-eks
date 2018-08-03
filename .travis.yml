@@ -1,0 +1,10 @@
+---
+
+sudo: required
+
+install:
+  - curl -LO https://github.com/wata727/tflint/releases/download/v0.7.1/tflint_darwin_amd64.zip && unzip tflint_darwin_amd64.zip && chmod +x tflint && sudo mv tflint /usr/local/bin/
+
+script:
+  - tflint -v
+  - tflint

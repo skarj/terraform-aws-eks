@@ -1,4 +1,5 @@
 # Terraform EKS Cluster
+[![Build Status](https://api.travis-ci.org/skarj/terraform-eks.svg?branch=master)](https://travis-ci.org/skarj/terraform-eks)
 
 This configuration includes the following resources:
 
