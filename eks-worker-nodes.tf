@@ -25,6 +25,36 @@ resource "aws_iam_role" "eks-node" {
 }
 POLICY
 }
+resource "aws_iam_policy" "eks-node-route53" {
+  name        = "${var.cluster-name}-node-route53"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+    {
+        "Effect": "Allow",
+        "Action": [
+        "route53:ChangeResourceRecordSets"
+        ],
+        "Resource": [
+        "arn:aws:route53:::hostedzone/*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+        "route53:ListHostedZones",
+        "route53:ListResourceRecordSets"
+        ],
+        "Resource": [
+        "*"
+        ]
+    }
+    ]
+}
+EOF
+}
 
 resource "aws_iam_role_policy_attachment" "eks-node-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
@@ -38,6 +68,11 @@ resource "aws_iam_role_policy_attachment" "eks-node-AmazonEKS_CNI_Policy" {
 
 resource "aws_iam_role_policy_attachment" "eks-node-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = "${aws_iam_role.eks-node.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "eks-node-Route53Policy" {
+  policy_arn = "${aws_iam_policy.eks-node-route53.arn}"
   role       = "${aws_iam_role.eks-node.name}"
 }
 

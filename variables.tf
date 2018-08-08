@@ -13,6 +13,6 @@ variable "nodes-instance-type" {
 }
 
 variable "nodes-count" {
-  default = "2"
+  default = "1"
   type    = "string"
 }

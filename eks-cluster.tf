@@ -24,6 +24,31 @@ resource "aws_iam_role" "eks-cluster" {
 POLICY
 }
 
+resource "aws_iam_policy" "eks-cluster-policy-lb" {
+  name        = "${var.cluster-name}-cluster-lb"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "iam:CreateServiceLinkedRole",
+            "Resource": "arn:aws:iam::*:role/aws-service-role/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeInternetGateways"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = "${aws_iam_role.eks-cluster.name}"
@@ -31,6 +56,11 @@ resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSClusterPolicy" {
 
 resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+  role       = "${aws_iam_role.eks-cluster.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "eks-cluster-CreateServiceLinkedRole" {
+  policy_arn = "${aws_iam_policy.eks-cluster-policy-lb.arn}"
   role       = "${aws_iam_role.eks-cluster.name}"
 }
 
